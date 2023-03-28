@@ -10,6 +10,9 @@ router.post("/login", authController.login);
 router.use(authController.protect);
 
 router.patch("/updateMe", userController.updateMe);
-router.delete("/deleteMe", userController.deleteMe);
+router.delete("/:id", userController.deleteMe);
+
+//router.route("/:id").delete(userController.deleteUser)
+router.route("/:id").patch(userController.updateUser)
 
 module.exports = router
