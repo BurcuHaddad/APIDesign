@@ -9,7 +9,10 @@ router.post("/login", authController.login);
 
 router.use(authController.protect);
 
+//Obtained user from JWT
 router.patch("/updateMe", userController.updateMe);
+
+
 router.delete("/:id", userController.deleteMe);
 
 //router.route("/:id").delete(userController.deleteUser)
