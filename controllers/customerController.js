@@ -1,4 +1,3 @@
-const { router } = require("..");
 const AppError = require("../utils/appError");
 const Customer = require("./../models/customerModel");
 const catchAsync = require("./../utils/catchAsync");
@@ -10,3 +9,12 @@ exports.createCustomer = factory.createOne(Customer);
 exports.updateCustomer = factory.updateOne(Customer);
 exports.deleteCustomer = factory.deleteOne(Customer);
 
+exports.deleteMe = catchAsync(async (req, res, next) => {
+    await Customer.findByIdAndUpdate(req.params.id, { active: false });
+  
+    res.status(204).json({
+      status: "success",
+      data: null,
+    });
+  });
+  

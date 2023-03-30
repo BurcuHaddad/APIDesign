@@ -53,8 +53,18 @@ const customerSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide your job"],
   },
+  active: {
+    type: Boolean,
+    default: true,
+    select: false
+  }
 });
 
+customerSchema.pre(/^find/, function (next) {
+  //this points to the current query
+  this.find({ active: {$ne: false} });
+  next();
+});
 const Customer = mongoose.model("Customer", customerSchema);
 
 module.exports = Customer;

@@ -6,14 +6,13 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(customerController.getAllCustomers)
+  .get(authController.protect, customerController.getAllCustomers)
   .post(authController.protect, customerController.createCustomer);
 
 router
   .route("/:id")
-  .get(customerController.getCustomer)
+  .get(authController.protect, customerController.getCustomer)
   .patch(authController.protect, customerController.updateCustomer)
-  .delete(authController.protect, customerController.deleteCustomer);
+  .delete(authController.protect, customerController.deleteMe);
 
-
-module.exports = router
+module.exports = router;
