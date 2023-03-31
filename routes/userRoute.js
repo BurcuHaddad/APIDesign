@@ -13,7 +13,7 @@ router.use(authController.protect);
 
 router
   .route("/")
-  .get(authController.protect,userController.getAllUsers)
+  .get(authController.protect,authController.restrictTo("admin", "supervisor"),userController.getAllUsers)
 
 //Obtained user from JWT
 router.patch("/updateMe", userController.updateMe);
@@ -22,6 +22,6 @@ router.patch("/updateMe", userController.updateMe);
 router.delete("/:id", userController.deleteMe);
 
 //router.route("/:id").delete(userController.deleteUser)
-router.route("/:id").patch(userController.updateUser)
+router.route("/:id").patch(userController.updateMe)
 
 module.exports = router

@@ -1,7 +1,7 @@
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 const APIFeatures = require("./../utils/apiFeatures");
-
+const User = require("./../models/userModel");
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = Model.findByIdAndDelete(req.params.id);
@@ -83,5 +83,21 @@ exports.getAll = (Model) =>
       data: {
         data: doc,
       },
+    });
+  });
+
+  exports.createCust = (Model) =>
+  catchAsync(async (req, res, next) => {
+    const sellerId = req.user.id;
+    const { name } = req.body;
+  
+    const doc = await Model.create({ ...req.body, seller: sellerId });
+  
+    const populatedDoc = await Model.findById(doc._id).populate('seller', 'name');
+  
+    res.status(201).json({
+      status: "success",
+      data: populatedDoc
+      
     });
   });

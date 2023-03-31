@@ -2,11 +2,12 @@ const express = require("express");
 const customerController = require("./../controllers/customerController");
 const authController = require("./../controllers/authController");
 
+
 const router = express.Router();
 
 router
   .route("/")
-  .get(authController.protect, customerController.getAllCustomers)
+  .get(authController.protect,authController.restrictTo("admin", "supervisor"), customerController.getAllCustomers)
   .post(authController.protect, customerController.createCustomer);
 
 router
