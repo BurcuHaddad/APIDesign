@@ -11,9 +11,12 @@ router.post("/login", authController.login);
 
 router.use(authController.protect);
 
+router.route("/seller").get(userController.getSellerCustomers)
+
 router
   .route("/")
   .get(authController.protect,authController.restrictTo("admin", "supervisor"),userController.getAllUsers)
+
 
 //Obtained user from JWT
 router.patch("/updateMe", userController.updateMe);
