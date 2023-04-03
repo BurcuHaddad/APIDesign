@@ -5,9 +5,21 @@ const authController = require("./../controllers/authController");
 
 const router = express.Router();
 
+function decideMiddleware(req, res, next) {
+  if (req.user.role === 'admin' || req.user.role === 'supervisor') {
+    return customerController.getAllCustomers(req, res, next);
+  }
+
+  if (req.user.role === 'seller') {
+    return customerController.getSellerCustomers(req, res, next);
+  }
+
+  return next(new AppError('You do not have permission to perform this action', 403));
+}
+
 router
   .route("/")
-  .get(authController.protect,authController.restrictTo("admin", "supervisor"), customerController.getAllCustomers)
+  .get(authController.protect, decideMiddleware)
   .post(authController.protect, customerController.createCustomer);
 
 router

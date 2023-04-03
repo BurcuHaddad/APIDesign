@@ -19,3 +19,17 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getSellerCustomers = catchAsync(async (req, res, next) => {
+  const sellerId = req.user._id;
+
+  const customers = await Customer.find({ seller: sellerId });
+
+  res.status(200).json({
+    status: 'success',
+    results: customers.length,
+    data: {
+      customers,
+    },
+  });
+});
+
