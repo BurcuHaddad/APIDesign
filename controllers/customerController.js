@@ -33,3 +33,22 @@ exports.getSellerCustomers = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.isCustomerOwner = async (req, res, next) => {
+  const customer = await Customer.findById(req.params.id);
+
+  if (!customer) {
+    return next(new AppError("Customer not found", 404));
+  }
+
+  if (req.user.role === "admin" || req.user.role === "supervisor") {
+    req.customer = customer;
+    return next();
+  }
+
+  if (customer.seller.toString() !== req.user._id.toString()) {
+    return next(new AppError("You are not authorized to perform this action", 403));
+  }
+
+  req.customer = customer;
+  next();
+}
