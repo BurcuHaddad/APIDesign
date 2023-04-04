@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const customer = require("./customerModel");
+const crypto = require("crypto");
 
 const userSchema = new mongoose.Schema(
   {
