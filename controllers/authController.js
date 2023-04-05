@@ -6,6 +6,7 @@ const AppError = require("./../utils/appError");
 const dotenv = require("dotenv");
 const { promisify } = require("util");
 const sendEmail = require("./../utils/email");
+const Customer = require("../models/customerModel");
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -168,7 +169,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
       message: "Token sent to email",
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
     await user.save({ validateBeforeSave: false });
@@ -224,12 +225,14 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
 exports.sendMail = catchAsync(async (req, res, next) => {
   const { to, subject, body } = req.body;
+  const seller = req.user;
 
   try {
     await sendEmail({
       email: to,
       subject: subject,
       message: body,
+      seller: seller,
     });
 
     res.status(200).json({
@@ -238,5 +241,30 @@ exports.sendMail = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     return next(new AppError("Failed to send email", 500));
+  }
+});
+
+exports.sendBulkEmail = catchAsync(async (req, res, next) => {
+  const currentUser = req.user;
+  const customers = await Customer.find({ seller: currentUser._id });
+
+  try {
+    for (const customer of customers) {
+      const message = `Dear ${customer.name},\n\n${req.body.message}\n\nBest regards,\n${currentUser.name}`;
+
+      await sendEmail({
+        seller: currentUser,
+        email: customer.email,
+        subject: req.body.subject,
+        message: message,
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Bulk email sent successfully",
+    });
+  } catch (err) {
+    return next(new AppError("Failed to send bulk email", 500));
   }
 });

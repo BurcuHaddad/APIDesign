@@ -9,7 +9,8 @@ const router = express.Router();
 router.post("/signup", authController.signup);
 router.post("/login", authController.login);
 router.post("/forgotPassword", authController.forgotPassword);
-router.post("/sendEmail", authController.sendMail);
+router.post("/sendEmail", authController.protect, authController.sendMail);
+router.post("/sendBulk", authController.protect, authController.sendBulkEmail);
 router.patch("/resetPassword/:token", authController.resetPassword);
 
 router.use(authController.protect);
