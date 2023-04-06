@@ -11,6 +11,9 @@ router.post("/login", authController.login);
 router.post("/forgotPassword", authController.forgotPassword);
 router.post("/sendEmail", authController.protect, authController.sendMail);
 router.post("/sendBulk", authController.protect, authController.sendBulkEmail);
+router.post("/sendMessage", authController.protect, authController.sendMessage);
+router.post("/sendBulkMessage", authController.protect, authController.sendBulkMessage);
+router.post("/sendSMS", authController.protect, authController.sendSMS);
 router.patch("/resetPassword/:token", authController.resetPassword);
 
 router.use(authController.protect);

@@ -42,10 +42,10 @@ const customerSchema = new mongoose.Schema(
     phone: {
       type: String,
       validate: {
-        validator: function (v) {
-          return /\d{3}-\d{3}-\d{4}/.test(v);
+        validator: function(v) {
+          return validator.isMobilePhone(v, "tr-TR")
         },
-        message: (props) => `${props.value} is not a valid phone number!`,
+        message: props => `${props.value} is not a valid phone number for Turkey!`
       },
       required: [true, "User phone number required"],
     },

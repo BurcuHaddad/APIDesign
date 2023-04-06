@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 const { promisify } = require("util");
 const sendEmail = require("./../utils/email");
 const Customer = require("../models/customerModel");
+const client = require("../utils/message");
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -266,5 +267,61 @@ exports.sendBulkEmail = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     return next(new AppError("Failed to send bulk email", 500));
+  }
+});
+
+exports.sendMessage = catchAsync(async (req, res, next) => {
+  const { message, to } = req.body;
+  const from = "whatsapp:+14155238886";
+
+  try {
+    const result = await client.messages.create({
+      body: message,
+      from,
+      to: `whatsapp:${to}`,
+    });
+    res.json({ message: "Message sent successfully" });
+  } catch (err) {
+    return next(new AppError("Failed to send message", 500));
+  }
+});
+
+exports.sendSMS = catchAsync(async (req, res, next) => {
+  const { message, to } = req.body;
+  const from = "+15677042523";
+
+  try {
+    const result = await client.messages.create({
+      body: message,
+      from,
+      to: `${to}`,
+    });
+    res.json({ message: "Message sent successfully" });
+  } catch (err) {
+    console.log(err);
+    return next(new AppError("Failed to send message", 500));
+  }
+});
+
+exports.sendBulkMessage = catchAsync(async (req, res, next) => {
+  const { message } = req.body;
+  const from = "whatsapp:+14155238886";
+
+  const currentUser = req.user;
+  const customers = await Customer.find({ seller: currentUser._id });
+
+  try {
+    const results = await Promise.all(
+      customers.map((customer) => {
+        return client.messages.create({
+          body: message,
+          from,
+          to: `whatsapp:${customer.phone}`,
+        });
+      })
+    );
+    res.json({ message: "Messages sent successfully" });
+  } catch (err) {
+    return next(new AppError("Failed to send messages", 500));
   }
 });
