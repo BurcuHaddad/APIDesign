@@ -8,6 +8,7 @@ const { promisify } = require("util");
 const sendEmail = require("./../utils/email");
 const Customer = require("../models/customerModel");
 const client = require("../utils/message");
+const logger = require("./../utils/logger")
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -52,6 +53,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
+  logger.info(`${req.body.email} logged in!`)
 
   if (!email || !password) {
     return next(new AppError("Please provide email and password!", 400));

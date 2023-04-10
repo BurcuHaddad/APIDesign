@@ -1,0 +1,13 @@
+{"isOperational":true,"level":"error","message":"Incorrect email or password","stack":"Error: Incorrect email or password\n    at C:\\Users\\burcu\\OneDrive\\Desktop\\API Design\\controllers\\authController.js:63:17","status":"fail","statusCode":401,"timestamp":"2023-04-10T08:36:53.531Z"}
+{"level":"error","message":"E11000 duplicate key error collection: crm.users index: email_1 dup key: { email: \"seller7@gmail.com\" }"}
+{"level":"error","message":"E11000 duplicate key error collection: crm.users index: email_1 dup key: { email: \"seller7@gmail.com\" }"}
+{"level":"error","message":"jwt malformed"}
+{"level":"error","message":"jwt malformed"}
+{"level":"error","message":"jwt malformed"}
+{"level":"error","message":"E11000 duplicate key error collection: crm.customers index: email_1 dup key: { email: \"haddadburcu1@gmail.com\" }"}
+{"level":"error","message":"E11000 duplicate key error collection: crm.customers index: email_1 dup key: { email: \"haddadburcu1@gmail.com\" }","timestamp":"2023-04-10T09:14:15.477Z"}
+{"isOperational":true,"level":"error","message":"Incorrect email or password","stack":"Error: Incorrect email or password\n    at C:\\Users\\burcu\\OneDrive\\Desktop\\API Design\\controllers\\authController.js:63:17","status":"fail","statusCode":401,"timestamp":"2023-04-10T09:14:30.508Z"}
+{"isOperational":true,"level":"error","message":"Incorrect email or password","stack":"Error: Incorrect email or password\n    at C:\\Users\\burcu\\OneDrive\\Desktop\\API Design\\controllers\\authController.js:63:17","status":"fail","statusCode":401,"timestamp":"2023-04-10T09:24:19.466Z"}
+{"isOperational":true,"level":"error","message":"Incorrect email or password","stack":"Error: Incorrect email or password\n    at C:\\Users\\burcu\\OneDrive\\Desktop\\API Design\\controllers\\authController.js:63:17","status":"fail","statusCode":401,"timestamp":"2023-04-10T09:24:33.807Z"}
+{"isOperational":true,"level":"error","message":"Incorrect email or password","service":"user-service","stack":"Error: Incorrect email or password\n    at C:\\Users\\burcu\\OneDrive\\Desktop\\API Design\\controllers\\authController.js:65:17","status":"fail","statusCode":401,"timestamp":"2023-04-10T09:32:49.495Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'name')","service":"user-service","timestamp":"2023-04-10T09:35:03.939Z"}
