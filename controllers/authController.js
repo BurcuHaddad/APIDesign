@@ -8,7 +8,8 @@ const { promisify } = require("util");
 const sendEmail = require("./../utils/email");
 const Customer = require("../models/customerModel");
 const client = require("../utils/message");
-const logger = require("./../utils/logger")
+const logger = require("./../utils/logger");
+const sendVerificationEmail = require("../utils/authEmail");
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -48,6 +49,14 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordChangedAt: req.body.passwordChangedAt,
     role: req.body.role,
   });
+
+  const token = crypto.randomBytes(32).toString("hex");
+
+  await User.findByIdAndUpdate(newUser._id, { emailVerificationToken: token});
+
+  const verificationLink = `http://127.0.0.1:5000/api/v1/user/verify-email/${token}`
+  await sendVerificationEmail(newUser, verificationLink);
+
   createSendToken(newUser, 201, res);
 });
 
@@ -225,5 +234,64 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   //4) Log user in, send JWT
   createSendToken(user, 200, res);
 });
+
+// exports.verifyEmail = catchAsync(async (req, res, next) => {
+//   const { token } = req.params;
+
+//   // Verify the token using your JWT secret
+//   const payload = jwt.verify(token, process.env.JWT_SECRET);
+
+//   // Find the user in the database by ID
+//   const user = await User.findById(payload.id);
+
+//   if (!user) {
+//     throw new Error('User not found');
+//   }
+
+//   // Mark the user as verified
+//   user.isVerified = true;
+//   await user.save();
+
+//   res.status(200).json({
+//     status: 'success',
+//     message: 'Email verified successfully',
+//   });
+// });
+
+exports.verifyEmail = catchAsync(async (req, res, next) => {
+  const { token } = req.params;
+
+  try {
+    // Verify the token using your JWT secret
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Find the user in the database by ID
+    const user = await User.findById(payload.id);
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    // Mark the user as verified
+    user.isVerified = true;
+    await user.save();
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Email verified successfully',
+    });
+  } catch (err) {
+    // Handle JWT verification errors
+    if (err instanceof jwt.JsonWebTokenError) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Invalid token',
+      });
+    }
+
+    next(err);
+  }
+});
+
 
 
