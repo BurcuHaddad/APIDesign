@@ -40,6 +40,12 @@ const createSendToken = (user, statusCode, res) => {
   });
 };
 
+const signEmailVerificationToken = (id) => {
+  return jwt.sign({ id }, process.env.EMAIL_VERIFICATION_TOKEN_SECRET, {
+    expiresIn: process.env.EMAIL_VERIFICATION_TOKEN_EXPIRES_IN,
+  });
+};
+
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
     name: req.body.name,
@@ -50,11 +56,11 @@ exports.signup = catchAsync(async (req, res, next) => {
     role: req.body.role,
   });
 
-  const token = crypto.randomBytes(32).toString("hex");
+  const emailVerificationToken = signEmailVerificationToken(newUser._id);
 
-  await User.findByIdAndUpdate(newUser._id, { emailVerificationToken: token});
+  await User.findByIdAndUpdate(newUser._id, { emailVerificationToken });
 
-  const verificationLink = `http://127.0.0.1:5000/api/v1/user/verify-email/${token}`
+  const verificationLink = `http://127.0.0.1:5000/api/v1/user/verify-email/${emailVerificationToken}`;
   await sendVerificationEmail(newUser, verificationLink);
 
   createSendToken(newUser, 201, res);
@@ -62,7 +68,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
-  logger.info(`${req.body.email} logged in!`)
+  logger.info(`${req.body.email} logged in!`);
 
   if (!email || !password) {
     return next(new AppError("Please provide email and password!", 400));
@@ -263,35 +269,35 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
 
   try {
     // Verify the token using your JWT secret
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const payload = jwt.verify(
+      token,
+      process.env.EMAIL_VERIFICATION_TOKEN_SECRET
+    );
 
     // Find the user in the database by ID
     const user = await User.findById(payload.id);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new Error("User not found");
     }
 
     // Mark the user as verified
-    user.isVerified = true;
-    await user.save();
+    user.emailVerified = true;
+    await user.save({ validateBeforeSave: false});
 
     res.status(200).json({
-      status: 'success',
-      message: 'Email verified successfully',
+      status: "success",
+      message: "Email verified successfully",
     });
   } catch (err) {
     // Handle JWT verification errors
     if (err instanceof jwt.JsonWebTokenError) {
       return res.status(400).json({
-        status: 'error',
-        message: 'Invalid token',
+        status: "error",
+        message: "Invalid token",
       });
     }
 
     next(err);
   }
 });
-
-
-
