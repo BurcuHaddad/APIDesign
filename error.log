@@ -12,10 +12,10 @@
 {"isOperational":true,"level":"error","message":"Incorrect email or password","service":"user-service","stack":"Error: Incorrect email or password\n    at C:\\Users\\burcu\\OneDrive\\Desktop\\API Design\\controllers\\authController.js:65:17","status":"fail","statusCode":401,"timestamp":"2023-04-10T09:32:49.495Z"}
 {"level":"error","message":"Cannot read properties of undefined (reading 'name')","service":"user-service","timestamp":"2023-04-10T09:35:03.939Z"}
 {"level":"error","message":"options is not defined","service":"user-service","timestamp":"2023-04-24T04:12:01.809Z"}
-{"level":"error","message":"E11000 duplicate key error collection: crm.users index: email_1 dup key: { email: \"burcumet97@gmail.com\" }","service":"user-service","timestamp":"2023-04-24T04:12:50.077Z"}
-{"level":"error","message":"E11000 duplicate key error collection: crm.users index: email_1 dup key: { email: \"burcumet97@gmail.com\" }","service":"user-service","timestamp":"2023-04-24T04:13:20.803Z"}
+{"level":"error","message":"E11000 duplicate key error collection: crm.users index: email_1 dup key: { email: \"testmail@gmail.com\" }","service":"user-service","timestamp":"2023-04-24T04:12:50.077Z"}
+{"level":"error","message":"E11000 duplicate key error collection: crm.users index: email_1 dup key: { email: \"testmail@gmail.com\" }","service":"user-service","timestamp":"2023-04-24T04:13:20.803Z"}
 {"level":"error","message":"transporter.sendVerificationEmail is not a function","service":"user-service","timestamp":"2023-04-24T04:14:20.824Z"}
-{"level":"error","message":"E11000 duplicate key error collection: crm.users index: email_1 dup key: { email: \"burcumet97@gmail.com\" }","service":"user-service","timestamp":"2023-04-24T04:17:48.558Z"}
+{"level":"error","message":"E11000 duplicate key error collection: crm.users index: email_1 dup key: { email: \"testmail@gmail.com\" }","service":"user-service","timestamp":"2023-04-24T04:17:48.558Z"}
 {"level":"error","message":"No recipients defined","service":"user-service","timestamp":"2023-04-24T04:18:07.459Z"}
 {"level":"error","message":"No recipients defined","service":"user-service","timestamp":"2023-04-24T04:20:27.472Z"}
 {"level":"error","message":"email is not defined","service":"user-service","timestamp":"2023-04-24T04:20:59.062Z"}
