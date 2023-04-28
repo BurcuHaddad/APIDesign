@@ -241,29 +241,6 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
-// exports.verifyEmail = catchAsync(async (req, res, next) => {
-//   const { token } = req.params;
-
-//   // Verify the token using your JWT secret
-//   const payload = jwt.verify(token, process.env.JWT_SECRET);
-
-//   // Find the user in the database by ID
-//   const user = await User.findById(payload.id);
-
-//   if (!user) {
-//     throw new Error('User not found');
-//   }
-
-//   // Mark the user as verified
-//   user.isVerified = true;
-//   await user.save();
-
-//   res.status(200).json({
-//     status: 'success',
-//     message: 'Email verified successfully',
-//   });
-// });
-
 exports.verifyEmail = catchAsync(async (req, res, next) => {
   const { token } = req.params;
 
