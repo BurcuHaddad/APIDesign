@@ -1,6 +1,5 @@
 const nodemailer = require("nodemailer");
 const user = require("./../models/userModel");
-//const verificationLink = require("./../controllers/authController")
 
 const sendVerificationEmail = async (user, verificationLink) => {
   const transporter = nodemailer.createTransport({
@@ -11,10 +10,7 @@ const sendVerificationEmail = async (user, verificationLink) => {
       user: process.env.EMAIL_USERNAME,
       pass: process.env.EMAIL_PASSWORD,
     },
-    
   });
-
-  
 
   const mailOptions = {
     from: "<info@burcuh.dev>",
@@ -26,11 +22,10 @@ const sendVerificationEmail = async (user, verificationLink) => {
     If you did not create an account with Your Company, please disregard this email.<br><br>
     Best regards,<br>
     Your Company`,
-}
+  };
 
   //3) Actually send the email
-  await transporter.sendMail(mailOptions)
+  await transporter.sendMail(mailOptions);
 };
 
-module.exports = sendVerificationEmail
-
+module.exports = sendVerificationEmail;

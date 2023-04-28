@@ -283,7 +283,7 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
 
     // Mark the user as verified
     user.emailVerified = true;
-    await user.save({ validateBeforeSave: false});
+    await user.save({ validateBeforeSave: false });
 
     res.status(200).json({
       status: "success",

@@ -86,18 +86,20 @@ exports.getAll = (Model) =>
     });
   });
 
-  exports.createCust = (Model) =>
+exports.createCust = (Model) =>
   catchAsync(async (req, res, next) => {
     const sellerId = req.user.id;
     const { name } = req.body;
-  
+
     const doc = await Model.create({ ...req.body, seller: sellerId });
-  
-    const populatedDoc = await Model.findById(doc._id).populate('seller', 'name');
-  
+
+    const populatedDoc = await Model.findById(doc._id).populate(
+      "seller",
+      "name"
+    );
+
     res.status(201).json({
       status: "success",
-      data: populatedDoc
-      
+      data: populatedDoc,
     });
   });

@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema(
     emailVerificationToken: String,
     emailVerified: {
       type: Boolean,
-      default:false
+      default: false,
     },
     active: {
       type: Boolean,
@@ -57,8 +57,6 @@ const userSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
-
-
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();

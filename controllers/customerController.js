@@ -3,7 +3,6 @@ const Customer = require("./../models/customerModel");
 const catchAsync = require("./../utils/catchAsync");
 const factory = require("./handlerFactory");
 
-
 exports.getAllCustomers = factory.getAll(Customer);
 exports.getCustomer = factory.getOne(Customer);
 exports.createCustomer = factory.createCust(Customer);
@@ -25,7 +24,7 @@ exports.getSellerCustomers = catchAsync(async (req, res, next) => {
   const customers = await Customer.find({ seller: sellerId });
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     results: customers.length,
     data: {
       customers,
@@ -46,9 +45,11 @@ exports.isCustomerOwner = async (req, res, next) => {
   }
 
   if (customer.seller.toString() !== req.user._id.toString()) {
-    return next(new AppError("You are not authorized to perform this action", 403));
+    return next(
+      new AppError("You are not authorized to perform this action", 403)
+    );
   }
 
   req.customer = customer;
   next();
-}
+};

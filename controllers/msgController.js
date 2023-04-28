@@ -54,30 +54,33 @@ exports.sendBulkEmail = catchAsync(async (req, res, next) => {
 });
 
 exports.sendSelectedBulkEmail = catchAsync(async (req, res, next) => {
-    const currentUser = req.user;
-    const { customerIds } = req.body;
-    const customers = await Customer.find({ _id: { $in: customerIds}  ,seller: currentUser._id });
-  
-    try {
-      for (const customer of customers) {
-        const message = `Dear ${customer.name},\n\n${req.body.message}\n\nBest regards,\n${currentUser.name}`;
-  
-        await sendEmail({
-          seller: currentUser,
-          email: customer.email,
-          subject: req.body.subject,
-          message: message,
-        });
-      }
-  
-      res.status(200).json({
-        status: "success",
-        message: "Bulk email sent successfully",
-      });
-    } catch (err) {
-      return next(new AppError("Failed to send bulk email", 500));
-    }
+  const currentUser = req.user;
+  const { customerIds } = req.body;
+  const customers = await Customer.find({
+    _id: { $in: customerIds },
+    seller: currentUser._id,
   });
+
+  try {
+    for (const customer of customers) {
+      const message = `Dear ${customer.name},\n\n${req.body.message}\n\nBest regards,\n${currentUser.name}`;
+
+      await sendEmail({
+        seller: currentUser,
+        email: customer.email,
+        subject: req.body.subject,
+        message: message,
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Bulk email sent successfully",
+    });
+  } catch (err) {
+    return next(new AppError("Failed to send bulk email", 500));
+  }
+});
 
 exports.sendMessage = catchAsync(async (req, res, next) => {
   const { message, to } = req.body;
@@ -141,7 +144,10 @@ exports.sendSelectedBulkMessage = catchAsync(async (req, res, next) => {
   const from = "whatsapp:+14155238886";
 
   const currentUser = req.user;
-  const customers = await Customer.find({ _id: { $in: customerIds}  ,seller: currentUser._id });
+  const customers = await Customer.find({
+    _id: { $in: customerIds },
+    seller: currentUser._id,
+  });
 
   try {
     const results = await Promise.all(

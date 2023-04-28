@@ -1,4 +1,4 @@
-const logger = require("./logger")
+const logger = require("./logger");
 
 module.exports = (fn) => {
   return (req, res, next) => {

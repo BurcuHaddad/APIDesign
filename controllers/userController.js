@@ -5,14 +5,14 @@ const factory = require("./handlerFactory");
 const Customer = require("./../models/customerModel");
 
 const filterObj = (obj, ...allowedFields) => {
-    const newObj = {};
-    Object.keys(obj).forEach((el) => {
-      if (allowedFields.includes(el)) {
-        newObj[el] = obj[el];
-      }
-    });
-    return newObj;
-  };
+  const newObj = {};
+  Object.keys(obj).forEach((el) => {
+    if (allowedFields.includes(el)) {
+      newObj[el] = obj[el];
+    }
+  });
+  return newObj;
+};
 
 exports.getMe = (req, res, next) => {
   req.params.id = req.user.id;
@@ -55,10 +55,9 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
-
 // exports.getUser = factory.getOne(User);
 // exports.getAllUsers = factory.getAll(User);
 //do NOT update passwords with this
 exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);
-exports.getAllUsers = factory.getAll(User)
+exports.getAllUsers = factory.getAll(User);
