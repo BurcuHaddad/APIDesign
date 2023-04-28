@@ -4,6 +4,11 @@
 This project serves as a comprehensive customer relations management system tailored for a hypothetical sales-focused company. Built with Node.js and Express, this project employs MongoDB as its database management system, with Mongoose serving as the Object Data Modeling (ODM) tool of choice and utilizes JSON Web Tokens (JWT) for authorization purposes. The project uses the Winston logger to log errors and track activity. This project was developed completely from scratch, with the exception of the libraries used to facilitate certain functionalities.
 
 
+## Postman
+
+ - [Endpoint Examples & Workspace](https://www.postman.com/aerospace-physicist-57865121/workspace/crm)
+
+
 ## Features
 
 - Option to implement three distinct user roles with different authorizations: admin, supervisor, and seller.
