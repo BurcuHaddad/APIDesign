@@ -5,10 +5,10 @@
 {"level":"error","message":"Cannot read properties of undefined (reading 'name')","service":"user-service"}
 {"level":"info","message":"seller7@gmail.com logged in!","service":"user-service"}
 {"level":"error","message":"options is not defined","service":"user-service"}
-{"level":"error","message":"E11000 duplicate key error collection: crm.users index: email_1 dup key: { email: \"burcumet97@gmail.com\" }","service":"user-service"}
-{"level":"error","message":"E11000 duplicate key error collection: crm.users index: email_1 dup key: { email: \"burcumet97@gmail.com\" }","service":"user-service"}
+{"level":"error","message":"E11000 duplicate key error collection: crm.users index: email_1 dup key: { email: \"testmail97@gmail.com\" }","service":"user-service"}
+{"level":"error","message":"E11000 duplicate key error collection: crm.users index: email_1 dup key: { email: \"testmail97@gmail.com\" }","service":"user-service"}
 {"level":"error","message":"transporter.sendVerificationEmail is not a function","service":"user-service"}
-{"level":"error","message":"E11000 duplicate key error collection: crm.users index: email_1 dup key: { email: \"burcumet97@gmail.com\" }","service":"user-service"}
+{"level":"error","message":"E11000 duplicate key error collection: crm.users index: email_1 dup key: { email: \"testmail97@gmail.com\" }","service":"user-service"}
 {"level":"error","message":"No recipients defined","service":"user-service"}
 {"level":"error","message":"No recipients defined","service":"user-service"}
 {"level":"error","message":"email is not defined","service":"user-service"}
